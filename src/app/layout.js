@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "../components/Navbar";
 import Container from "../components/Container";
 import TabsClient from "../components/Tabs";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -32,6 +33,7 @@ export default function RootLayout({ children }) {
           <TabsClient />
         </Container>
         {children}
+        <Toaster position="bottom-right" />
       </body>
     </html>
   );
