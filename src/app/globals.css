@@ -12,10 +12,10 @@
   --popover-foreground: oklch(0.145 0 0);
   --primary: oklch(0.2435 0 0);
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.6799 0.2174 2.29);
+  --secondary: #ef6f6c;
   --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
+  --muted: hsl(0, 0%, 96%);
+  --muted-foreground: oklch(26.448% 0.00003 271.152);
   --accent: oklch(0.9461 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
@@ -25,20 +25,26 @@
   --ring: oklch(0.36 0 0);
   --font-sans: Inter, sans-serif;
   --font-serif: Space Grotesk, serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
-  --radius: 1rem;
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  --radius: 0.75rem;
   --shadow-2xs: 0 1px 1.5px -0.25px hsl(0 0% 0% / 0.02);
   --shadow-xs: 0 1px 1.5px -0.25px hsl(0 0% 0% / 0.02);
-  --shadow-sm: 0 1px 1.5px -0.25px hsl(0 0% 0% / 0.04),
+  --shadow-sm:
+    0 1px 1.5px -0.25px hsl(0 0% 0% / 0.04),
     0 1px 2px -1.25px hsl(0 0% 0% / 0.04);
-  --shadow: 0 1px 1.5px -0.25px hsl(0 0% 0% / 0.04),
+  --shadow:
+    0 1px 1.5px -0.25px hsl(0 0% 0% / 0.04),
     0 1px 2px -1.25px hsl(0 0% 0% / 0.04);
-  --shadow-md: 0 1px 1.5px -0.25px hsl(0 0% 0% / 0.04),
+  --shadow-md:
+    0 1px 1.5px -0.25px hsl(0 0% 0% / 0.04),
     0 2px 4px -1.25px hsl(0 0% 0% / 0.04);
-  --shadow-lg: 0 1px 1.5px -0.25px hsl(0 0% 0% / 0.04),
+  --shadow-lg:
+    0 1px 1.5px -0.25px hsl(0 0% 0% / 0.04),
     0 4px 6px -1.25px hsl(0 0% 0% / 0.04);
-  --shadow-xl: 0 1px 1.5px -0.25px hsl(0 0% 0% / 0.04),
+  --shadow-xl:
+    0 1px 1.5px -0.25px hsl(0 0% 0% / 0.04),
     0 8px 10px -1.25px hsl(0 0% 0% / 0.04);
   --shadow-2xl: 0 1px 1.5px -0.25px hsl(0 0% 0% / 0.1);
   --tracking-normal: 0em;
@@ -67,20 +73,26 @@
   --ring: oklch(0.7085 0.1467 16.85);
   --font-sans: Inter, sans-serif;
   --font-serif: Space Grotesk, serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
   --radius: 1rem;
   --shadow-2xs: 0 1px 1.5px -0.25px hsl(0 0% 0% / 0.02);
   --shadow-xs: 0 1px 1.5px -0.25px hsl(0 0% 0% / 0.02);
-  --shadow-sm: 0 1px 1.5px -0.25px hsl(0 0% 0% / 0.04),
+  --shadow-sm:
+    0 1px 1.5px -0.25px hsl(0 0% 0% / 0.04),
     0 1px 2px -1.25px hsl(0 0% 0% / 0.04);
-  --shadow: 0 1px 1.5px -0.25px hsl(0 0% 0% / 0.04),
+  --shadow:
+    0 1px 1.5px -0.25px hsl(0 0% 0% / 0.04),
     0 1px 2px -1.25px hsl(0 0% 0% / 0.04);
-  --shadow-md: 0 1px 1.5px -0.25px hsl(0 0% 0% / 0.04),
+  --shadow-md:
+    0 1px 1.5px -0.25px hsl(0 0% 0% / 0.04),
     0 2px 4px -1.25px hsl(0 0% 0% / 0.04);
-  --shadow-lg: 0 1px 1.5px -0.25px hsl(0 0% 0% / 0.04),
+  --shadow-lg:
+    0 1px 1.5px -0.25px hsl(0 0% 0% / 0.04),
     0 4px 6px -1.25px hsl(0 0% 0% / 0.04);
-  --shadow-xl: 0 1px 1.5px -0.25px hsl(0 0% 0% / 0.04),
+  --shadow-xl:
+    0 1px 1.5px -0.25px hsl(0 0% 0% / 0.04),
     0 8px 10px -1.25px hsl(0 0% 0% / 0.04);
   --shadow-2xl: 0 1px 1.5px -0.25px hsl(0 0% 0% / 0.1);
 }

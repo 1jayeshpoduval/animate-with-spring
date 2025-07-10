@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Tabs, TabsList, TabsTrigger } from "@/shadcnComponents/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import tabsData from "@/data/tabsData";
 import { useState } from "react";
 import { motion } from "motion/react";
