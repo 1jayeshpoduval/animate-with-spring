@@ -69,7 +69,7 @@ const ChooseClient = () => {
       <section className="py-4">
         <Container className="@container/Choose">
           <h1 className="font-sans text-2xl font-semibold tracking-tight @md/Choose:max-w-[30ch]">
-            The best hand curated spring presets.
+            Finely tuned spring animation presets.
           </h1>
           <div className="mt-8 grid grid-cols-4 gap-8 pb-32 @lg/Choose:grid-cols-8 @4xl/Choose:grid-cols-12">
             {presets.map((preset, index) => (
@@ -141,7 +141,7 @@ const ChooseClient = () => {
                       <div className="flex flex-col">
                         {preset.config.mass && (
                           <div className="flex gap-1">
-                            <span className="text-primary/50 font-sans text-sm font-medium">
+                            <span className="text-primary/50 w-[18px] font-sans text-sm font-medium">
                               M:
                             </span>
                             <span className="text-primary/50 font-sans text-sm font-bold">
@@ -151,7 +151,7 @@ const ChooseClient = () => {
                         )}
                         {preset.config.stiffness && (
                           <div className="flex gap-1">
-                            <span className="text-primary/50 font-sans text-sm font-medium">
+                            <span className="text-primary/50 w-[18px] font-sans text-sm font-medium">
                               S:
                             </span>
                             <span className="text-primary/50 font-sans text-sm font-bold">
@@ -161,7 +161,7 @@ const ChooseClient = () => {
                         )}
                         {preset.config.damping && (
                           <div className="flex gap-1">
-                            <span className="text-primary/50 font-sans text-sm font-medium">
+                            <span className="text-primary/50 w-[18px] font-sans text-sm font-medium">
                               D:
                             </span>
                             <span className="text-primary/50 font-sans text-sm font-bold">
