@@ -1,8 +1,8 @@
-import Container from "@/components/Container";
 import React from "react";
+import LearnClient from "../client-pages/LearnClient";
 
 const Learn = () => {
-  return <Container>Learn</Container>;
+  return <LearnClient />;
 };
 
 export default Learn;

@@ -44,7 +44,7 @@ const presets = [
     },
   },
   {
-    name: "Gentle",
+    name: "Elegant",
     type: "time",
     config: {
       bounce: 0.27,
