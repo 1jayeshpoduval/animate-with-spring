@@ -52,6 +52,15 @@ const presets = [
     },
   },
   {
+    name: "Swift Flick",
+    type: "physics",
+    config: {
+      mass: 0.75,
+      stiffness: 200,
+      damping: 20,
+    },
+  },
+  {
     name: "Hard Drift",
     type: "physics",
     config: {
