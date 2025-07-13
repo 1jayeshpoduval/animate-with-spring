@@ -75,14 +75,15 @@ const CreateClient = () => {
       console.error(error.message);
     }
     toast.custom((t) => (
-      <div className="bg-secondary text-primary-foreground relative flex w-[360px] items-center justify-between rounded-[12px] p-3 text-sm">
+      <div className="bg-secondary text-primary-foreground relative flex w-[360px] items-center justify-between rounded-[12px] p-3 text-sm shadow-[0_1px_1px_-0.5px_rgba(161,21,18,0.06),0_4px_4px_-2px_rgba(161,21,18,0.06),0_8px_8px_-4px_rgba(161,21,18,0.06),0_-1px_1px_-0.5px_rgba(161,21,18,0.06),0_-4px_4px_-2px_rgba(161,21,18,0.06),0_-8px_8px_-4px_rgba(161,21,18,0.06)]">
         <span className="font-sans">Spring transition property copied!</span>
-        <button
+        <Button
+          variant="default"
           className="items-cente bg-primary-foreground flex cursor-pointer justify-center rounded-[6px] px-2 py-1 select-none"
           onClick={() => toast.dismiss(t)}
         >
           <span className="text-primary font-sans font-medium">Close</span>
-        </button>
+        </Button>
       </div>
     ));
   };
@@ -97,9 +98,9 @@ const CreateClient = () => {
 
   return (
     <main>
-      <section className="py-4">
+      <section className="my-12 md:mt-28 lg:h-[75vh]">
         <Container className="@container/Create">
-          <h1 className="font-sans text-2xl font-semibold tracking-tight @md/Create:max-w-[30ch]">
+          <h1 className="font-sans text-2xl font-semibold tracking-tight @md/Create:max-w-[25ch]">
             Make your own spring animation.
           </h1>
           <Tabs defaultValue="Physics" className="pt-4">
@@ -275,21 +276,51 @@ const CreateClient = () => {
                           onClick={() => handleCodeCopy(springTab.key)}
                         >
                           {codeCopy ? (
-                            <Check size={24} strokeWidth={2.5} />
+                            <Check
+                              size={24}
+                              strokeWidth={2.5}
+                              className="text-primary/50 hover:text-primary"
+                            />
                           ) : (
-                            <Copy size={24} strokeWidth={2.5} />
+                            <Copy
+                              size={24}
+                              strokeWidth={2.5}
+                              className="text-primary/50 hover:text-primary"
+                            />
                           )}
                         </Button>
                       </>
                     ) : (
-                      <div className="font-mono whitespace-pre">
-                        {/* Whitespace pre preserves manual line breaks and spaces, making it display exactly like template  */}
-                        {`transition={{ 
+                      <>
+                        <div className="font-mono whitespace-pre">
+                          {/* Whitespace pre preserves manual line breaks and spaces, making it display exactly like template  */}
+                          {`transition={{ 
   type: 'spring', 
   bounce: ${springValues.bounce}, 
   duration: ${springValues.duration},
-  }}`}
-                      </div>
+}}`}
+                        </div>
+                        <Button
+                          className="absolute top-4 right-4 size-8 !p-2"
+                          variant="secondary"
+                          asChild
+                          onClick={() => handleCodeCopy(springTab.key)}
+                        >
+                          {codeCopy ? (
+                            <Check
+                              size={24}
+                              strokeWidth={2.5}
+                              className="text-primary/50 hover:text-primary"
+                            />
+                          ) : (
+                            <Copy
+                              size={24}
+                              strokeWidth={2.5}
+                              className="text-primary/50 hover:text-primary"
+                            />
+                          )}
+                        </Button>
+                      </>
                     )}
                   </div>
                 </div>

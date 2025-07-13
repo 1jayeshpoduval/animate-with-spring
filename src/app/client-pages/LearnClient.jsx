@@ -25,10 +25,10 @@ const LearnClient = () => {
 
   return (
     <main>
-      <section className="py-4">
+      <section className="mt-12 md:mt-28">
         <Container className="@container/Learn">
           <div className="flex flex-col gap-8">
-            <h1 className="font-sans text-2xl font-semibold tracking-tight @md/Learn:max-w-[30ch]">
+            <h1 className="font-sans text-2xl font-semibold tracking-tight @md/Learn:max-w-[25ch]">
               What does mass, stiffness, and damping really mean?
             </h1>
             <div className="flex flex-col gap-6">
@@ -195,7 +195,7 @@ const LearnClient = () => {
             <ul className="flex flex-col gap-4">
               {resources.map((resource) => (
                 <li
-                  className="text-primary/50 hover:text-primary flex items-center gap-2 font-medium transition-colors hover:underline"
+                  className="text-primary/50 hover:text-primary flex items-center gap-2 font-medium hover:underline"
                   key={resource.url}
                 >
                   <a

@@ -6,12 +6,12 @@ import { useState } from "react";
 import { motion } from "motion/react";
 import Link from "next/link";
 
-const TabsClient = () => {
+const TabsClient = ({ className }) => {
   const [activeTab, setActiveTab] = useState(tabsData[0]);
 
   const handleTabClick = (tabLabel) => {
     const clickedTab = tabsData.find(
-      (tabData) => tabData.tabLabel === tabLabel
+      (tabData) => tabData.tabLabel === tabLabel,
     );
 
     if (clickedTab) {
@@ -20,7 +20,7 @@ const TabsClient = () => {
   };
 
   return (
-    <Tabs defaultValue={activeTab.tabLabel}>
+    <Tabs defaultValue={activeTab.tabLabel} className={className}>
       <TabsList>
         {tabsData.map((tabData, index) => (
           <Link href={tabData.tabUrl} key={index} className="flex flex-1">
@@ -37,10 +37,10 @@ const TabsClient = () => {
                     duration: 0.23,
                     bounce: 0.12,
                   }}
-                  className="absolute inset-0 rounded-sm bg-primary-foreground shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_1px_1px_-0.5px_rgba(0,0,0,0.06),0_2px_2px_-1px_rgba(0,0,0,0.06),0_4px_4px_-2px_rgba(0,0,0,0.06)]"
+                  className="bg-primary-foreground absolute inset-0 rounded-sm shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_1px_1px_-0.5px_rgba(0,0,0,0.06),0_2px_2px_-1px_rgba(0,0,0,0.06),0_4px_4px_-2px_rgba(0,0,0,0.06)]"
                 />
               )}
-              <span className="z-20 relative">{tabData.tabLabel}</span>
+              <span className="relative z-10">{tabData.tabLabel}</span>
             </TabsTrigger>
           </Link>
         ))}
