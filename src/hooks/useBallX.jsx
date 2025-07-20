@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import useWindowSize from "./useWindowSize";
 
 const useBallX = () => {
@@ -11,7 +11,7 @@ const useBallX = () => {
       const { width } = dottedLineRef.current.getBoundingClientRect(); // Get the width of the dotted line ref
       setBallTravelDistance(width);
     }
-  }, [windowSize.width]);
+  }, [windowSize.width, dottedLineRef.current]);
 
   return { ballTravelDistance, dottedLineRef };
 };
