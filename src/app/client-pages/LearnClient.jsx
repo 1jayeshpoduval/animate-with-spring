@@ -4,12 +4,13 @@ import { ArrowUpRight, Lightbulb, Play, Square } from "lucide-react";
 import springEffects from "@/data/springEffects";
 import { motion } from "motion/react";
 import useBallX from "@/hooks/useBallX";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import resources from "@/data/resources";
 
 const LearnClient = () => {
   const [effects, setEffects] = useState(springEffects);
+
+  const [resources, setResources] = useState([]);
 
   const { ballTravelDistance, dottedLineRef } = useBallX();
 
@@ -22,6 +23,18 @@ const LearnClient = () => {
       ),
     );
   };
+
+  useEffect(() => {
+    fetch("/api/resources")
+      .then((res) => res.json())
+      .then((data) => {
+        setResources(data.resources);
+      })
+      .catch((err) => {
+        console.error("Error fetching resources", err);
+        setIsLoading(false);
+      });
+  }, []);
 
   return (
     <main>
