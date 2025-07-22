@@ -2,6 +2,7 @@ const springTabs = [
   {
     springType: "Physics",
     key: "physics",
+    languages: ["Motion", "SwiftUI"],
     fields: [
       {
         name: "Mass",
@@ -29,6 +30,7 @@ const springTabs = [
   {
     springType: "Time",
     key: "time",
+    languages: ["Motion", "SwiftUI"],
     fields: [
       {
         name: "Bounce",

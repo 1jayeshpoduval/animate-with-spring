@@ -1,9 +1,9 @@
 import React from "react";
-import Container from "./Container";
-import TabsClient from "../components/Tabs";
+import Container from "./ContainerTool";
+import TabsClient from "./Tabs";
 import Link from "next/link";
 
-const Navbar = () => {
+const NavbarTool = () => {
   return (
     <nav className="fixed top-0 z-50 w-screen bg-white py-4 font-sans shadow-2xl">
       <Container className="flex items-center justify-center md:justify-between">
@@ -75,4 +75,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default NavbarTool;

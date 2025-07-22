@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-import Container from "@/components/Container";
+import ContainerTool from "@/components/ContainerTool";
 import { motion } from "motion/react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -19,7 +19,7 @@ const ChooseClient = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch("api/presets")
+    fetch("/api/presets")
       .then((res) => res.json())
       .then((data) => {
         setPresets(data.presets);
@@ -80,15 +80,30 @@ const ChooseClient = () => {
   return (
     <main>
       <section className="my-12 md:mt-28">
-        <Container className="@container/Choose">
+        <ContainerTool className="@container/Choose">
           <h1 className="font-sans text-2xl font-semibold tracking-tight @md/Choose:max-w-[25ch]">
             Growing collection of finely tuned spring animations.
           </h1>
           {isLoading ? (
             <div className="flex h-[80vh] items-center justify-center">
-              <span className="text-primary/50 font-medium">
-                Loading presets...
-              </span>
+              <div className="flex flex-col items-center gap-4">
+                <motion.div
+                  className="bg-secondary size-4 rounded-full"
+                  initial={{ x: 50 }}
+                  animate={{ x: -50 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 120,
+                    damping: 20,
+                    mass: 1,
+                    repeat: Infinity,
+                    repeatType: "mirror",
+                  }}
+                ></motion.div>
+                <span className="text-primary/50 font-medium">
+                  Loading presets...
+                </span>
+              </div>
             </div>
           ) : (
             <div className="mt-8 grid grid-cols-4 gap-8 @lg/Choose:grid-cols-8 @4xl/Choose:grid-cols-12">
@@ -244,7 +259,7 @@ const ChooseClient = () => {
               ))}
             </div>
           )}
-        </Container>
+        </ContainerTool>
       </section>
     </main>
   );

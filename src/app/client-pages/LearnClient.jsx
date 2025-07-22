@@ -1,25 +1,31 @@
 "use client";
-import Container from "@/components/Container";
+import Container from "@/components/ContainerTool";
 import { ArrowUpRight, Lightbulb, Play, Square } from "lucide-react";
-import springEffects from "@/data/springEffects";
+import springFactors from "@/data/springFactors";
 import { motion } from "motion/react";
 import useBallX from "@/hooks/useBallX";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 const LearnClient = () => {
-  const [effects, setEffects] = useState(springEffects);
+  const [factors, setFactors] = useState(springFactors);
 
   const [resources, setResources] = useState([]);
 
   const { ballTravelDistance, dottedLineRef } = useBallX();
 
-  const handleAnimationClick = (springEffect) => {
-    setEffects((prevEffect) =>
-      prevEffect.map((prev) =>
-        prev.key === springEffect.key
-          ? { ...prev, toggle: !prev.toggle }
-          : prev,
+  const handleAnimationClick = (springFactor, animationType) => {
+    setFactors((prevFactor) =>
+      prevFactor.map((factor) =>
+        factor.key === springFactor.key
+          ? {
+              ...factor,
+              [animationType]: {
+                ...factor[animationType],
+                toggle: !factor[animationType].toggle,
+              },
+            }
+          : factor,
       ),
     );
   };
@@ -92,106 +98,119 @@ const LearnClient = () => {
         <Container className="@container/Learn">
           <div className="mb-12 flex flex-col gap-8">
             <h2 className="font-sans text-xl font-semibold tracking-tight @md/Learn:max-w-[30ch]">
-              What does different combinations feel like?
+              What makes a spring animation tasteful?
             </h2>
-            <div className="grid grid-cols-4 gap-16 md:grid-cols-8 lg:grid-cols-12 lg:gap-16">
+            <div className="grid grid-cols-4 gap-y-16 md:grid-cols-8 lg:grid-cols-12 lg:gap-x-16 lg:gap-y-32">
               {/* Map over effects as it holds the springEffects */}
-              {effects.map((effect) => (
+              {factors.map((factor) => (
                 <div
                   className="col-span-4 flex flex-col gap-8 md:col-span-8 md:flex md:flex-row lg:col-span-12"
-                  key={effect.key}
+                  key={factor.key}
                 >
-                  <div className="flex w-full flex-col gap-2" key={effect.key}>
-                    <span className="font-semibold">{effect.name}</span>
-                    <div className="flex flex-col gap-1">
-                      <div className="flex gap-4">
-                        <span className="text-primary/50 w-[80px]">Mass</span>
-                        <span className="text-primary/50 font-semibold">
-                          {effect.massString}
-                        </span>
-                      </div>
-                      <div className="flex gap-4">
-                        <span className="text-primary/50 w-[80px]">
-                          Stiffness
-                        </span>
-                        <span className="text-primary/50 font-semibold">
-                          {effect.stiffnessString}
-                        </span>
-                      </div>
-                      <div className="flex gap-4">
-                        <span className="text-primary/50 w-[80px]">
-                          Damping
-                        </span>
-                        <span className="text-primary/50 font-semibold">
-                          {effect.dampingString}
-                        </span>
-                      </div>
-                    </div>
+                  <div className="flex w-full flex-col gap-2" key={factor.key}>
+                    <span className="font-semibold">{factor.factorName}</span>
+                    <span className="text-primary/50 w-full max-w-[45ch]">
+                      {factor.description}
+                    </span>
                   </div>
-                  <div className="relative flex h-[250px] w-full items-center justify-center overflow-hidden rounded-lg bg-neutral-50">
-                    <Button
-                      className="absolute bottom-4 left-4 size-8 !p-2"
-                      variant="secondary"
-                      asChild
-                      onClick={() => handleAnimationClick(effect)}
-                    >
-                      {effect.toggle ? (
-                        <Square fill="black" size={20} />
-                      ) : (
-                        <Play fill="black" size={20} />
-                      )}
-                    </Button>
-                    <div className="absolute right-4 bottom-4 flex flex-col">
-                      <div className="flex gap-1">
-                        <span className="text-primary/50 w-[18px] font-sans text-sm font-medium">
-                          M:
+                  {factor.tasteful.key && factor.tasteless.key && (
+                    <div className="row-span-2 grid w-full grid-rows-subgrid gap-4">
+                      <div className="relative flex h-[150px] w-full items-center justify-center overflow-hidden rounded-lg bg-neutral-50">
+                        <Button
+                          className="absolute bottom-4 left-4 size-8 !p-2"
+                          variant="secondary"
+                          asChild
+                          onClick={() =>
+                            handleAnimationClick(factor, "tasteless")
+                          }
+                        >
+                          {factor.tasteless.toggle ? (
+                            <Square fill="black" size={20} />
+                          ) : (
+                            <Play fill="black" size={20} />
+                          )}
+                        </Button>
+                        <span className="text-primary/50 absolute top-4 right-4 text-sm font-medium">
+                          Tasteless
                         </span>
-                        <span className="text-primary/50 font-sans text-sm font-bold">
-                          {effect.mass}
-                        </span>
+                        <div
+                          className="relative h-[1px] w-[65%] bg-[url('/dotted-line.svg')] bg-repeat"
+                          ref={dottedLineRef}
+                        >
+                          <motion.div
+                            className="bg-secondary absolute top-1/2 size-8 -translate-[16px] rounded-full"
+                            /* To force kill the animation */
+                            key={
+                              factor.tasteless.toggle
+                                ? `playing-${factor.key}-${factor.tasteless.key}`
+                                : `killed-${factor.key}-${factor.tasteless.key}`
+                            }
+                            initial={{ x: 0 }}
+                            animate={{
+                              x: factor.tasteless.toggle
+                                ? ballTravelDistance
+                                : 0,
+                            }}
+                            transition={{
+                              type: "spring",
+                              stiffness: `${factor.tasteless.stiffness}`,
+                              damping: `${factor.tasteless.damping}`,
+                              mass: `${factor.tasteless.mass}`,
+                              repeat: Infinity,
+                              repeatType: "mirror",
+                            }}
+                          ></motion.div>
+                        </div>
                       </div>
-                      <div className="flex gap-1">
-                        <span className="text-primary/50 w-[18px] font-sans text-sm font-medium">
-                          S:
+                      <div className="relative flex h-[150px] w-full items-center justify-center overflow-hidden rounded-lg bg-neutral-50">
+                        <Button
+                          className="absolute bottom-4 left-4 size-8 !p-2"
+                          variant="secondary"
+                          asChild
+                          onClick={() =>
+                            handleAnimationClick(factor, "tasteful")
+                          }
+                        >
+                          {factor.tasteful.toggle ? (
+                            <Square fill="black" size={20} />
+                          ) : (
+                            <Play fill="black" size={20} />
+                          )}
+                        </Button>
+                        <span className="absolute top-4 right-4 text-sm font-medium text-[#4769FF]">
+                          Tasteful
                         </span>
-                        <span className="text-primary/50 font-sans text-sm font-bold">
-                          {effect.stiffness}
-                        </span>
-                      </div>
-                      <div className="flex gap-1">
-                        <span className="text-primary/50 w-[18px] font-sans text-sm font-medium">
-                          D:
-                        </span>
-                        <span className="text-primary/50 font-sans text-sm font-bold">
-                          {effect.damping}
-                        </span>
+                        <div
+                          className="relative h-[1px] w-[65%] bg-[url('/dotted-line.svg')] bg-repeat"
+                          ref={dottedLineRef}
+                        >
+                          <motion.div
+                            className="bg-secondary absolute top-1/2 size-8 -translate-[16px] rounded-full"
+                            /* To force kill the animation */
+                            key={
+                              factor.tasteful.toggle
+                                ? `playing-${factor.key}-${factor.tasteful.key}`
+                                : `killed-${factor.key}-${factor.tasteful.key}`
+                            }
+                            initial={{ x: 0 }}
+                            animate={{
+                              x: factor.tasteful.toggle
+                                ? ballTravelDistance
+                                : 0,
+                            }}
+                            transition={{
+                              type: "spring",
+                              stiffness: `${factor.tasteful.stiffness}`,
+                              damping: `${factor.tasteful.damping}`,
+                              mass: `${factor.tasteful.mass}`,
+                              repeat: Infinity,
+                              repeatType: "mirror",
+                            }}
+                          ></motion.div>
+                        </div>
                       </div>
                     </div>
-                    <div
-                      className="relative h-[1px] w-[65%] bg-[url('/dotted-line.svg')] bg-repeat"
-                      ref={dottedLineRef}
-                    >
-                      <motion.div
-                        className="bg-secondary absolute top-1/2 size-8 -translate-[16px] rounded-full"
-                        /* To force kill the animation */
-                        key={
-                          effect.toggle
-                            ? `playing-${effect.key}`
-                            : `killed-${effect.key}`
-                        }
-                        initial={{ x: 0 }}
-                        animate={{ x: effect.toggle ? ballTravelDistance : 0 }}
-                        transition={{
-                          type: "spring",
-                          stiffness: `${effect.stiffness}`,
-                          damping: `${effect.damping}`,
-                          mass: `${effect.mass}`,
-                          repeat: Infinity,
-                          repeatType: "mirror",
-                        }}
-                      ></motion.div>
-                    </div>
-                  </div>
+                  )}
                 </div>
               ))}
             </div>
