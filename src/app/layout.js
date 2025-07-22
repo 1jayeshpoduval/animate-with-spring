@@ -1,11 +1,7 @@
 import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
-import Navbar from "../components/Navbar";
-import Container from "../components/Container";
-import TabsClient from "../components/Tabs";
-import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from "@vercel/analytics/next";
-import Footer from "@/components/Footer";
+import NavbarLanding from "@/components/NavbarLanding";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -29,15 +25,10 @@ export default function RootLayout({ children }) {
         className={`${inter.variable} ${spaceGrotesk.variable} flex flex-col antialiased`}
       >
         <header className="relative z-20">
-          <Navbar />
+          <NavbarLanding />
         </header>
-        <Container className="mt-28 block md:hidden">
-          <TabsClient />
-        </Container>
         {children}
         <Analytics />
-        <Toaster position="bottom-right" />
-        <Footer />
       </body>
     </html>
   );

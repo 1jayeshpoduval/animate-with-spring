@@ -1,11 +1,11 @@
 import React from "react";
-import Container from "../components/Container";
+import Container from "./ContainerTool";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="z-50 mt-auto border-t border-t-1 bg-white py-6 font-sans">
+    <footer className="z-50 mt-auto border-t-1 bg-white py-6 font-sans">
       <Container className="flex items-center justify-between">
         <span className="text-primary/50 text-sm font-medium">
           Created by{" "}

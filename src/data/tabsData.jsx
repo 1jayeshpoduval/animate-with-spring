@@ -1,17 +1,17 @@
 const tabsData = [
   {
     tabLabel: "Choose",
-    tabUrl: "/",
+    tabUrl: "/tool/choose",
     tabContent: "Create tab",
   },
   {
     tabLabel: "Create",
-    tabUrl: "/create",
+    tabUrl: "/tool/create",
     tabContent: "Choose tab",
   },
   {
     tabLabel: "Learn",
-    tabUrl: "/learn",
+    tabUrl: "/tool/learn",
     tabContent: "<LearnTab />",
   },
 ];

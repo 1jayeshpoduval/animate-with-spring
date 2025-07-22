@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import Container from "@/components/Container";
+import Container from "@/components/ContainerTool";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import springTabs from "@/data/springTabs";
 import { Slider } from "@/components/ui/slider";
@@ -49,21 +49,25 @@ const CreateClient = () => {
   };
 
   // Copy transition code to clipboard
-  const handleCodeCopy = async (springType) => {
+  const handleCodeCopy = async (springType, language) => {
     let code = "";
-    if (springType === "physics") {
+    if (springType === "Physics" && language === "Motion") {
       code = `transition={{
               type: 'spring',
               mass: ${springValues.mass},
               stiffness: ${springValues.stiffness},
               damping: ${springValues.damping},
            }}`;
-    } else {
+    } else if (springType === "Physics" && language === "SwiftUI") {
+      code = `withAnimation(.interpolatingSpring(mass: ${springValues.mass}, stiffness: ${springValues.stiffness}, damping: ${springValues.damping}))`;
+    } else if (springType === "Time" && language === "Motion") {
       code = `transition={{
               type: 'spring',
               bounce: ${springValues.bounce},
               duration: ${springValues.duration}, 
             }}`;
+    } else {
+      `withAnimation(.spring(bounce: ${springValues.bounce}, duration: ${springValues.duration}))`;
     }
     setCodeCopy(true);
     setTimeout(() => {
@@ -76,16 +80,70 @@ const CreateClient = () => {
     }
     toast.custom((t) => (
       <div className="bg-secondary text-primary-foreground relative flex w-[360px] items-center justify-between rounded-[12px] p-3 text-sm shadow-[0_1px_1px_-0.5px_rgba(161,21,18,0.06),0_4px_4px_-2px_rgba(161,21,18,0.06),0_8px_8px_-4px_rgba(161,21,18,0.06),0_-1px_1px_-0.5px_rgba(161,21,18,0.06),0_-4px_4px_-2px_rgba(161,21,18,0.06),0_-8px_8px_-4px_rgba(161,21,18,0.06)]">
-        <span className="font-sans">Spring transition property copied!</span>
+        <span className="font-sans">Code copied to clipboard</span>
         <Button
           variant="default"
-          className="items-cente bg-primary-foreground flex cursor-pointer justify-center rounded-[6px] px-2 py-1 select-none"
+          className="items-cente bg-primary-foreground text-primary hover:bg-foreground flex cursor-pointer justify-center rounded-[6px] px-2 py-1 font-sans font-medium select-none hover:text-white"
           onClick={() => toast.dismiss(t)}
         >
-          <span className="text-primary font-sans font-medium">Close</span>
+          Close
         </Button>
       </div>
     ));
+  };
+
+  const renderCodeBlock = (springTab, language) => {
+    const isPhysics = springTab.springType === "Physics";
+    const isTime = springTab.springType === "Time";
+
+    if (isPhysics && language === "Motion") {
+      return (
+        <>
+          <div className="w-full font-mono text-sm whitespace-pre">
+            {`transition={{ 
+  type: 'spring', 
+  mass: ${springValues.mass}, 
+  stiffness: ${springValues.stiffness},
+  damping: ${springValues.damping},
+}}`}
+          </div>
+        </>
+      );
+    }
+
+    if (isPhysics && language === "SwiftUI") {
+      return (
+        <>
+          <div className="w-full font-mono text-sm whitespace-pre">
+            {`withAnimation(.interpolatingSpring(mass: ${springValues.mass}, stiffness: ${springValues.stiffness}, damping: ${springValues.damping}))`}
+          </div>
+        </>
+      );
+    }
+
+    if (isTime && language === "Motion") {
+      return (
+        <>
+          <div className="w-full font-mono text-sm whitespace-pre">
+            {`transition={{ 
+  type: 'spring', 
+  bounce: ${springValues.bounce}, 
+  duration: ${springValues.duration},
+}}`}
+          </div>
+        </>
+      );
+    }
+
+    if (isTime && language === "SwiftUI") {
+      return (
+        <>
+          <div className="w-full font-mono text-sm whitespace-pre">
+            {`withAnimation(.spring(bounce: ${springValues.bounce}, duration: ${springValues.duration}))`}
+          </div>
+        </>
+      );
+    }
   };
 
   // Dynamically update ballTravelDistance on window resize
@@ -255,25 +313,32 @@ const CreateClient = () => {
                 </div>
 
                 <div className="col-span-4 flex flex-col gap-4 md:col-span-8 lg:col-span-12">
-                  <span className="font-sans font-semibold">Motion code</span>
-
-                  <div className="relative w-full rounded-lg bg-neutral-50 p-4 font-mono text-sm whitespace-pre">
-                    {springTab.springType === "Physics" ? (
-                      <>
-                        <div className="whitespeace-pre w-full font-mono text-sm">
-                          {`transition={{ 
-  type: 'spring', 
-  mass: ${springValues.mass}, 
-  stiffness: ${springValues.stiffness},
-  damping: ${springValues.damping},
-}}`}
-                        </div>
-
+                  <Tabs defaultValue="Motion">
+                    <TabsList className="xs:w-[0px] gap-4 p-0 py-2">
+                      {springTab.languages.map((language) => (
+                        <TabsTrigger
+                          value={language}
+                          key={language}
+                          className="data-[state=active]:text-primary hover:text-primary p-0 data-[state=active]:bg-transparent"
+                        >
+                          <span className="relative z-20">{language}</span>
+                        </TabsTrigger>
+                      ))}
+                    </TabsList>
+                    {springTab.languages.map((language) => (
+                      <TabsContent
+                        value={language}
+                        key={`${springTab.key}-${language}`}
+                        className="relative w-full rounded-lg bg-neutral-50 p-4 font-mono text-sm whitespace-pre"
+                      >
+                        {renderCodeBlock(springTab, language)}
                         <Button
                           className="absolute top-4 right-4 size-8 !p-2"
                           variant="secondary"
                           asChild
-                          onClick={() => handleCodeCopy(springTab.key)}
+                          onClick={() =>
+                            handleCodeCopy(springTab.springType, language)
+                          }
                         >
                           {codeCopy ? (
                             <Check
@@ -289,40 +354,9 @@ const CreateClient = () => {
                             />
                           )}
                         </Button>
-                      </>
-                    ) : (
-                      <>
-                        <div className="font-mono whitespace-pre">
-                          {/* Whitespace pre preserves manual line breaks and spaces, making it display exactly like template  */}
-                          {`transition={{ 
-  type: 'spring', 
-  bounce: ${springValues.bounce}, 
-  duration: ${springValues.duration},
-}}`}
-                        </div>
-                        <Button
-                          className="absolute top-4 right-4 size-8 !p-2"
-                          variant="secondary"
-                          asChild
-                          onClick={() => handleCodeCopy(springTab.key)}
-                        >
-                          {codeCopy ? (
-                            <Check
-                              size={24}
-                              strokeWidth={2.5}
-                              className="text-primary/50 hover:text-primary"
-                            />
-                          ) : (
-                            <Copy
-                              size={24}
-                              strokeWidth={2.5}
-                              className="text-primary/50 hover:text-primary"
-                            />
-                          )}
-                        </Button>
-                      </>
-                    )}
-                  </div>
+                      </TabsContent>
+                    ))}
+                  </Tabs>
                 </div>
               </TabsContent>
             ))}
