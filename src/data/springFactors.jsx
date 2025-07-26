@@ -2,7 +2,7 @@ const springFactors = [
   {
     factorName: "Duration",
     description:
-      "A tasteful spring animation respects your user’s sense of time. It feels quick but never rushed. As a rule of thumb, keep most of your spring animations within within 200–450ms. Few exceptions apply, however no spring animation should be over 800ms. It makes the interface feel lazy.",
+      "A tasteful spring animation respects a user’s time. It feels quick but never rushed. As a rule of thumb, keep most of your spring animations within 150–350ms. Few exceptions apply, however no spring animation (or any UI animation) should be over 700ms. It makes your interface feel slow.",
     key: "duration",
 
     tasteless: {
@@ -23,7 +23,7 @@ const springFactors = [
   {
     factorName: "Bounce",
     description:
-      "Bounce should match the physical weight of what’s moving. Sometimes the best spring animations are the ones with no bounce. Too much bounce feels cartoonish, like the interface is made of jelly (unless you want your brand tone to convey that).",
+      "Bounce should match the physical weight of what’s moving. Too much bounce feels cartoonish, like the interface is made of jelly (unless you want your brand's tone to convey that). Sometimes the best spring animations are the ones with no bounce.",
     key: "bounce",
     tasteless: {
       key: "tasteless",
@@ -83,7 +83,7 @@ const springFactors = [
   {
     factorName: "Context Awareness",
     description:
-      "Not all spring animations should be created equally. A tooltip, a modal, a micro-interaction: each demands a different feel. A tasteful spring animation matches the context of the element being animated. It takes into account its size, purpose, and weight",
+      "Not all spring animations should be created equally. A tooltip animation should feel different from a modal animation. A tasteful spring animation matches the context of the element being animated. It takes into account its size, purpose, and weight.",
     key: "contextAwareness",
     tasteless: {
       mass: 2.2,

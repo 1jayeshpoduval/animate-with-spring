@@ -118,6 +118,7 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
+  --font-heading: var(--font-heading);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
   --font-serif: var(--font-serif);

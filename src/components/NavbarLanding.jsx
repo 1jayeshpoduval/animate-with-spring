@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const NavbarLanding = () => {
   return (
-    <nav className="fixed top-0 w-screen bg-white py-4">
+    <nav className="fixed top-0 z-50 w-screen bg-white py-4">
       <ContainerLanding className="flex items-center justify-center">
         <Link href="/">
           <svg

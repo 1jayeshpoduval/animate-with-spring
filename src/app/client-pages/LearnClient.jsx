@@ -4,7 +4,7 @@ import { ArrowUpRight, Lightbulb, Play, Square } from "lucide-react";
 import springFactors from "@/data/springFactors";
 import { motion } from "motion/react";
 import useBallX from "@/hooks/useBallX";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 
 const LearnClient = () => {
@@ -12,7 +12,8 @@ const LearnClient = () => {
 
   const [resources, setResources] = useState([]);
 
-  const { ballTravelDistance, dottedLineRef } = useBallX();
+  const dottedLineRef = useRef(null);
+  const ballTravelDistance = useBallX(dottedLineRef);
 
   const handleAnimationClick = (springFactor, animationType) => {
     setFactors((prevFactor) =>
@@ -47,27 +48,28 @@ const LearnClient = () => {
       <section className="mt-12 md:mt-28">
         <Container className="@container/Learn">
           <div className="flex flex-col gap-8">
-            <h1 className="font-sans text-2xl font-semibold tracking-tight @md/Learn:max-w-[25ch]">
+            <h1 className="font-heading text-3xl tracking-tight @md/Learn:max-w-[25ch]">
               What does mass, stiffness, and damping really mean?
             </h1>
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-2">
-                <span className="font-semibold">Mass</span>
-                <p className="max-w-[60ch]">
-                  Imagine a ball. Mass is like the weight of that ball.
+                <span className="text-[1.05rem] font-medium">Mass</span>
+                <p className="text-primary/65 max-w-[50ch]">
+                  Imagine you're holding a ball. Mass is how heavy the ball
+                  feels in your hand.
                 </p>
               </div>
               <div className="flex flex-col gap-2">
-                <span className="font-semibold">Stiffness</span>
-                <p className="max-w-[50ch]">
-                  Now imagine the ball is attached to a spring. Stiffness is how
-                  strongly the spring tries to pull the ball back to where it
-                  started.
+                <span className="text-[1.05rem] font-medium">Stiffness</span>
+                <p className="text-primary/65 max-w-[50ch]">
+                  Now imagine you have attached that ball to a spring and pulled
+                  it down. Stiffness is how strongly the spring tries to pull
+                  the ball back to where it started.
                 </p>
               </div>
               <div className="flex flex-col gap-2">
-                <span className="font-semibold">Damping</span>
-                <p className="max-w-[50ch]">
+                <span className="text-[1.05rem] font-medium">Damping</span>
+                <p className="text-primary/65 max-w-[50ch]">
                   Damping is like friction. It decides how much bounce the
                   spring loses over time. Zero damping means the spring never
                   stops springing.
@@ -81,9 +83,8 @@ const LearnClient = () => {
         <Container className="@container/Learn">
           <div className="text-secondary relative my-4 ml-4 max-w-[45ch] rounded-lg bg-[#FDEDED] py-4 pr-2 pl-6 font-medium md:my-8">
             <p>
-              The spring motion{" "}
-              <span className="font-semibold italic">always</span> depends on
-              how mass, stiffness, and damping work{" "}
+              The spring motion always depends on how mass, stiffness, and
+              damping work{" "}
               <span className="font-semibold italic">together</span>. It’s the
               mix that decides whether an animation feels playful, snappy,
               smooth or heavy.
@@ -97,7 +98,7 @@ const LearnClient = () => {
       <section className="py-4">
         <Container className="@container/Learn">
           <div className="mb-12 flex flex-col gap-8">
-            <h2 className="font-sans text-xl font-semibold tracking-tight @md/Learn:max-w-[30ch]">
+            <h2 className="font-heading text-[1.6rem] leading-8 tracking-tight @md/Learn:max-w-[30ch]">
               What makes a spring animation tasteful?
             </h2>
             <div className="grid grid-cols-4 gap-y-16 md:grid-cols-8 lg:grid-cols-12 lg:gap-x-16 lg:gap-y-32">
@@ -108,10 +109,12 @@ const LearnClient = () => {
                   key={factor.key}
                 >
                   <div className="flex w-full flex-col gap-2" key={factor.key}>
-                    <span className="font-semibold">{factor.factorName}</span>
-                    <span className="text-primary/50 w-full max-w-[45ch]">
-                      {factor.description}
+                    <span className="text-[1.05rem] font-medium">
+                      {factor.factorName}
                     </span>
+                    <p className="text-primary/65 w-full max-w-[50ch]">
+                      {factor.description}
+                    </p>
                   </div>
                   {factor.tasteful.key && factor.tasteless.key && (
                     <div className="row-span-2 grid w-full grid-rows-subgrid gap-4">
@@ -220,14 +223,13 @@ const LearnClient = () => {
       <section className="py-4">
         <Container className="@container/Learn">
           <div className="mb-12 flex flex-col gap-8">
-            <h2 className="font-sans text-xl font-semibold tracking-tight @md/Learn:max-w-[30ch]">
-              Here are some awesome resources to learn more about spring
-              animations.
+            <h2 className="font-heading text-[1.6rem] leading-8 tracking-tight @md/Learn:max-w-[30ch]">
+              Some great resources to learn more about spring animations.
             </h2>
             <ul className="flex flex-col gap-4">
               {resources.map((resource) => (
                 <li
-                  className="text-primary/50 hover:text-primary flex items-center gap-2 font-medium hover:underline"
+                  className="text-primary/65 hover:text-primary flex items-center gap-2 font-medium hover:underline"
                   key={resource.url}
                 >
                   <a

@@ -1,22 +1,31 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import ContainerTool from "@/components/ContainerTool";
-import { motion } from "motion/react";
-import { useState } from "react";
-import { toast } from "sonner";
+import { AnimatePresence, motion } from "motion/react";
 import { Button } from "@/components/ui/button";
-import { Copy, Check } from "lucide-react";
+import { toast } from "sonner";
 import useBallX from "@/hooks/useBallX";
+import PresetsList from "@/components/PresetsList";
+import Preset from "@/components/Preset";
 
 const ChooseClient = () => {
-  const { ballTravelDistance, dottedLineRef } = useBallX();
-
   const [hovered, setHovered] = useState("");
 
-  const [codeCopy, setCodeCopy] = useState(false);
+  const [codeCopy, setCodeCopy] = useState(null);
 
   const [presets, setPresets] = useState([]);
+
+  const [selectedPreset, setSelectedPreset] = useState({});
+
   const [isLoading, setIsLoading] = useState(true);
+  const [isPresetOpen, setIsPresetOpen] = useState(false);
+
+  // Since <PresetList /> and <Preset /> have different dotted line widths
+  const dottedLineRefList = useRef(null);
+  const dottedLineRefModal = useRef(null);
+
+  const ballTravelDistanceList = useBallX(dottedLineRefList);
+  const ballTravelDistanceModal = useBallX(dottedLineRefModal);
 
   useEffect(() => {
     fetch("/api/presets")
@@ -31,33 +40,43 @@ const ChooseClient = () => {
       });
   }, []);
 
-  const handleHoveredAnimation = (animationName) => {
+  const handleHoveredAnimation = (presetName) => {
     const hoveredAnimation = presets.find(
-      (preset) => preset.name === animationName,
+      (preset) => preset.name === presetName,
     );
     setHovered(hoveredAnimation);
   };
 
+  const handlePresetClick = (presetName) => {
+    const clickedPreset = presets.find((preset) => preset.name === presetName);
+    setSelectedPreset(clickedPreset);
+    setIsPresetOpen(true);
+  };
+
   // Copy transition code to clipboard
-  const handleCodeCopy = async (preset) => {
+  const handleCodeCopy = async (preset, language) => {
     let code = "";
-    if (preset.type === "physics") {
+    if (preset.type === "physics" && language === "Motion") {
       code = `transition={{
               type: 'spring',
               mass: ${preset.config.mass},
               stiffness: ${preset.config.stiffness},
               damping: ${preset.config.damping},
            }}`;
-    } else {
+    } else if (preset.type === "physics" && language === "SwiftUI") {
+      code = `withAnimation(.interpolatingSpring(mass: ${preset.config.mass}, stiffness: ${preset.config.stiffness}, damping: ${preset.config.damping}))`;
+    } else if (preset.type === "time" && language === "Motion") {
       code = `transition={{
               type: 'spring',
               bounce: ${preset.config.bounce},
               duration: ${preset.config.duration}, 
             }}`;
+    } else {
+      code = `withAnimation(.spring(bounce: ${preset.config.bounce}, duration: ${preset.config.duration}))`;
     }
-    setCodeCopy(true);
+    setCodeCopy(language);
     setTimeout(() => {
-      setCodeCopy(false);
+      setCodeCopy(null);
     }, 4000);
     try {
       await navigator.clipboard.writeText(code);
@@ -66,13 +85,14 @@ const ChooseClient = () => {
     }
     toast.custom((t) => (
       <div className="bg-secondary text-primary-foreground relative flex w-[360px] items-center justify-between rounded-[12px] p-3 text-sm shadow-[0_1px_1px_-0.5px_rgba(161,21,18,0.06),0_4px_4px_-2px_rgba(161,21,18,0.06),0_8px_8px_-4px_rgba(161,21,18,0.06),0_-1px_1px_-0.5px_rgba(161,21,18,0.06),0_-4px_4px_-2px_rgba(161,21,18,0.06),0_-8px_8px_-4px_rgba(161,21,18,0.06)]">
-        <span className="font-sans">Spring transition property copied!</span>
-        <button
-          className="items-cente bg-primary-foreground flex cursor-pointer justify-center rounded-[6px] px-2 py-1 select-none"
+        <span className="font-sans">Code copied to clipboard</span>
+        <Button
+          variant="default"
+          className="items-cente bg-primary-foreground text-primary hover:bg-foreground flex cursor-pointer justify-center rounded-[6px] px-2 py-1 font-sans font-medium select-none hover:text-white"
           onClick={() => toast.dismiss(t)}
         >
-          <span className="text-primary font-sans font-medium">Close</span>
-        </button>
+          Close
+        </Button>
       </div>
     ));
   };
@@ -81,185 +101,67 @@ const ChooseClient = () => {
     <main>
       <section className="my-12 md:mt-28">
         <ContainerTool className="@container/Choose">
-          <h1 className="font-sans text-2xl font-semibold tracking-tight @md/Choose:max-w-[25ch]">
+          <h1 className="font-heading text-3xl tracking-tight @md/Choose:max-w-[25ch]">
             Growing collection of finely tuned spring animations.
           </h1>
-          {isLoading ? (
-            <div className="flex h-[80vh] items-center justify-center">
-              <div className="flex flex-col items-center gap-4">
-                <motion.div
-                  className="bg-secondary size-4 rounded-full"
-                  initial={{ x: 50 }}
-                  animate={{ x: -50 }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 120,
-                    damping: 20,
-                    mass: 1,
-                    repeat: Infinity,
-                    repeatType: "mirror",
-                  }}
-                ></motion.div>
-                <span className="text-primary/50 font-medium">
-                  Loading presets...
-                </span>
-              </div>
-            </div>
-          ) : (
-            <div className="mt-8 grid grid-cols-4 gap-8 @lg/Choose:grid-cols-8 @4xl/Choose:grid-cols-12">
-              {presets.map((preset) => (
-                <div
-                  key={preset.id}
-                  className="col-span-4 flex cursor-pointer flex-col gap-2 select-none"
-                  onPointerEnter={() => handleHoveredAnimation(preset.name)}
-                  onPointerLeave={() => setHovered("")}
-                  onClick={() => handleCodeCopy(preset)}
-                >
+          <AnimatePresence mode="popLayout">
+            {isLoading && !isPresetOpen ? (
+              <motion.div
+                className="flex h-[80vh] items-center justify-center"
+                key="loading"
+                animate={{ opacity: 1 }}
+                exit={{
+                  opacity: 0,
+                  transition: {
+                    duration: 0.1,
+                  },
+                }}
+                transition={{
+                  type: "tween",
+                  ease: "easeInOut",
+                }}
+              >
+                <div className="flex flex-col items-center gap-4">
                   <motion.div
-                    className="relative flex h-80 items-center justify-center overflow-hidden rounded-2xl bg-neutral-50"
-                    whileHover={{ scale: 1.02 }}
-                  >
-                    <div
-                      className="relative h-[1px] w-[65%] bg-[url('/dotted-line.svg')] bg-repeat"
-                      ref={dottedLineRef}
-                    >
-                      <motion.div
-                        key={
-                          hovered.name === preset.name
-                            ? `active-${preset.name}`
-                            : `inactive-${preset.name}`
-                        } // Force recreate element on hover in and out. This ensures Motion doesn't keep the last animated position in memory and resumes from there
-                        className={`absolute top-1/2 size-8 -translate-[16px] rounded-full ${
-                          hovered?.name === preset.name
-                            ? "bg-secondary"
-                            : "bg-transparent"
-                        }`}
-                        initial={{ x: 0 }}
-                        animate={{
-                          x:
-                            hovered.name === preset.name
-                              ? ballTravelDistance
-                              : 0,
-                        }} // Animate the ball to the width of the dotted line
-                        transition={
-                          preset.type === "time"
-                            ? {
-                                type: "spring",
-                                duration: preset.config?.duration,
-                                bounce: preset.config?.bounce,
-                                repeat: Infinity,
-                                repeatType: "mirror",
-                              }
-                            : {
-                                type: "spring",
-                                stiffness: preset.config?.stiffness,
-                                damping: preset.config?.damping,
-                                mass: preset.config?.mass,
-                                repeat: Infinity,
-                                repeatType: "mirror",
-                              }
-                        }
-                      ></motion.div>
-                    </div>
-                    {hovered.name === preset.name && (
-                      <>
-                        <Button
-                          className="absolute top-4 right-4 hidden size-8 !p-2 lg:block"
-                          variant="secondary"
-                          asChild
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleCodeCopy(preset);
-                          }}
-                        >
-                          {codeCopy ? (
-                            <Check
-                              size={24}
-                              strokeWidth={2.5}
-                              className="text-primary/50 hover:text-primary"
-                            />
-                          ) : (
-                            <Copy
-                              size={24}
-                              strokeWidth={2.5}
-                              className="text-primary/50 hover:text-primary"
-                            />
-                          )}
-                        </Button>
-                        <motion.div
-                          className="absolute right-12 bottom-0 left-0 flex w-full items-end justify-between p-6"
-                          initial={{ opacity: 0.5, scale: 0.99 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{
-                            type: "tween",
-                            ease: "easeOut",
-                            duration: 0.1,
-                          }}
-                        >
-                          <span className="text-primary/50 font-sans text-sm font-medium">
-                            {preset.name}
-                          </span>
-                          <div className="flex flex-col">
-                            {preset.config?.mass && (
-                              <div className="flex gap-1">
-                                <span className="text-primary/50 w-[18px] font-sans text-sm font-medium">
-                                  M:
-                                </span>
-                                <span className="text-primary/50 font-sans text-sm font-bold">
-                                  {preset.config?.mass}
-                                </span>
-                              </div>
-                            )}
-                            {preset.config?.stiffness && (
-                              <div className="flex gap-1">
-                                <span className="text-primary/50 w-[18px] font-sans text-sm font-medium">
-                                  S:
-                                </span>
-                                <span className="text-primary/50 font-sans text-sm font-bold">
-                                  {preset.config?.stiffness}
-                                </span>
-                              </div>
-                            )}
-                            {preset.config?.damping && (
-                              <div className="flex gap-1">
-                                <span className="text-primary/50 w-[18px] font-sans text-sm font-medium">
-                                  D:
-                                </span>
-                                <span className="text-primary/50 font-sans text-sm font-bold">
-                                  {preset.config?.damping}
-                                </span>
-                              </div>
-                            )}
-                            {preset.config?.bounce && (
-                              <div className="flex gap-1">
-                                <span className="text-primary/50 font-sans text-sm font-medium">
-                                  B:
-                                </span>
-                                <span className="text-primary/50 font-sans text-sm font-bold">
-                                  {preset.config?.bounce}
-                                </span>
-                              </div>
-                            )}
-                            {preset.config?.duration && (
-                              <div className="flex gap-1">
-                                <span className="text-primary/50 font-sans text-sm font-medium">
-                                  D:
-                                </span>
-                                <span className="text-primary/50 font-sans text-sm font-bold">
-                                  {preset.config?.duration}
-                                </span>
-                              </div>
-                            )}
-                          </div>
-                        </motion.div>
-                      </>
-                    )}
-                  </motion.div>
+                    className="bg-secondary size-4 rounded-full"
+                    initial={{ x: 50 }}
+                    animate={{ x: -50 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 120,
+                      damping: 20,
+                      mass: 1,
+                      repeat: Infinity,
+                      repeatType: "mirror",
+                    }}
+                  ></motion.div>
+                  <span className="text-primary/50">Loading presets...</span>
                 </div>
-              ))}
-            </div>
-          )}
+              </motion.div>
+            ) : (
+              <PresetsList
+                presets={presets}
+                hovered={hovered}
+                setHovered={setHovered}
+                handleHoveredAnimation={handleHoveredAnimation}
+                handlePresetClick={handlePresetClick}
+                isPresetOpen={isPresetOpen}
+                ballTravelDistance={ballTravelDistanceList}
+                dottedLineRef={dottedLineRefList}
+              />
+            )}
+          </AnimatePresence>
         </ContainerTool>
+        <Preset
+          presets={presets}
+          selectedPreset={selectedPreset}
+          isPresetOpen={isPresetOpen}
+          setIsPresetOpen={setIsPresetOpen}
+          ballTravelDistance={ballTravelDistanceModal}
+          dottedLineRef={dottedLineRefModal}
+          handleCodeCopy={handleCodeCopy}
+          codeCopy={codeCopy}
+        />
       </section>
     </main>
   );

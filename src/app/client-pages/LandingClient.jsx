@@ -1,6 +1,6 @@
 "use client";
 import ContainerLanding from "@/components/ContainerLanding";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import useBallX from "@/hooks/useBallX";
@@ -8,7 +8,9 @@ import presets from "@/data/landingPagePresets";
 import { motion } from "motion/react";
 
 const LandingClient = () => {
-  const { ballTravelDistance, dottedLineRef } = useBallX();
+  const dottedLineRef = useRef(null);
+
+  const ballTravelDistance = useBallX(dottedLineRef);
 
   const [springPreset, setSpringPreset] = useState("");
 
@@ -38,7 +40,7 @@ const LandingClient = () => {
     <main>
       <section className="h-[100dvh] overflow-hidden lg:h-screen">
         <ContainerLanding className="flex h-[75%] flex-col items-center justify-center gap-4">
-          <h1 className="max-w-[15ch] text-center font-sans text-4xl leading-11 font-medium tracking-tighter md:max-w-[20ch] md:text-5xl md:leading-14">
+          <h1 className="font-heading max-w-[15ch] text-center text-4xl leading-11 font-medium tracking-tighter md:max-w-[20ch] md:text-5xl md:leading-14">
             Configure tasteful spring animations with ease
           </h1>
           <motion.div
@@ -86,11 +88,11 @@ const LandingClient = () => {
                   className={`${preset.name === springPreset.name ? "bg-secondary text-white" : ""}`}
                   onClick={() => handlePresetClick(preset.name)}
                 >
-                  {preset.name}{" "}
+                  {preset.name}
                 </Button>
               ))}
               <Link
-                className="text-secondary select-none hover:underline"
+                className="text-secondary text-sm font-medium select-none hover:underline"
                 href="/tool/choose"
               >
                 and more
