@@ -20,7 +20,7 @@ const TabsClient = ({ className }) => {
   };
 
   return (
-    <Tabs defaultValue={activeTab.tabLabel} className={className}>
+    <Tabs value={activeTab.tabLabel} className={className}>
       <TabsList>
         {tabsData.map((tabData, index) => (
           <Link href={tabData.tabUrl} key={index} className="flex flex-1">
@@ -34,7 +34,7 @@ const TabsClient = ({ className }) => {
                   layoutId="active-tab"
                   transition={{
                     type: "spring",
-                    duration: 0.23,
+                    duration: 0.25,
                     bounce: 0.12,
                   }}
                   className="bg-primary-foreground absolute inset-0 rounded-sm shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_1px_1px_-0.5px_rgba(0,0,0,0.06),0_2px_2px_-1px_rgba(0,0,0,0.06),0_4px_4px_-2px_rgba(0,0,0,0.06)]"

@@ -67,7 +67,7 @@ const CreateClient = () => {
               duration: ${springValues.duration}, 
             }}`;
     } else {
-      `withAnimation(.spring(bounce: ${springValues.bounce}, duration: ${springValues.duration}))`;
+      code = `withAnimation(.spring(bounce: ${springValues.bounce}, duration: ${springValues.duration}))`;
     }
     setCodeCopy(true);
     setTimeout(() => {
@@ -99,7 +99,7 @@ const CreateClient = () => {
     if (isPhysics && language === "Motion") {
       return (
         <>
-          <div className="w-full font-mono text-sm whitespace-pre">
+          <div className="w-full font-mono text-sm whitespace-pre-wrap">
             {`transition={{ 
   type: 'spring', 
   mass: ${springValues.mass}, 
@@ -114,7 +114,7 @@ const CreateClient = () => {
     if (isPhysics && language === "SwiftUI") {
       return (
         <>
-          <div className="w-full font-mono text-sm whitespace-pre">
+          <div className="w-full font-mono text-sm whitespace-pre-wrap">
             {`withAnimation(.interpolatingSpring(mass: ${springValues.mass}, stiffness: ${springValues.stiffness}, damping: ${springValues.damping}))`}
           </div>
         </>
@@ -124,7 +124,7 @@ const CreateClient = () => {
     if (isTime && language === "Motion") {
       return (
         <>
-          <div className="w-full font-mono text-sm whitespace-pre">
+          <div className="w-full font-mono text-sm whitespace-pre-wrap">
             {`transition={{ 
   type: 'spring', 
   bounce: ${springValues.bounce}, 
@@ -138,7 +138,7 @@ const CreateClient = () => {
     if (isTime && language === "SwiftUI") {
       return (
         <>
-          <div className="w-full font-mono text-sm whitespace-pre">
+          <div className="w-full font-mono text-sm whitespace-pre-wrap">
             {`withAnimation(.spring(bounce: ${springValues.bounce}, duration: ${springValues.duration}))`}
           </div>
         </>
@@ -158,11 +158,11 @@ const CreateClient = () => {
     <main>
       <section className="my-12 md:mt-28 lg:h-[75vh]">
         <Container className="@container/Create">
-          <h1 className="font-sans text-2xl font-semibold tracking-tight @md/Create:max-w-[25ch]">
+          <h1 className="font-heading text-3xl tracking-tight @md/Create:max-w-[25ch]">
             Make your own spring animation.
           </h1>
           <Tabs defaultValue="Physics" className="pt-4">
-            <TabsList className="xs:w-[200px] gap-4 bg-transparent">
+            <TabsList className="xs:w-[200px] w-[200px] gap-4 bg-transparent">
               {springTabs.map((springTab) => (
                 <TabsTrigger
                   value={springTab.springType}
@@ -272,7 +272,7 @@ const CreateClient = () => {
                   </div>
                 </div>
                 <div className="col-span-4 lg:col-span-6">
-                  <div className="relative flex h-[280px] items-center justify-center overflow-hidden rounded-2xl bg-neutral-50 lg:h-full">
+                  <div className="relative flex h-[200px] items-center justify-center overflow-hidden rounded-2xl bg-neutral-50 lg:h-full">
                     <div
                       className="relative h-[1px] w-[65%] bg-[url('/dotted-line.svg')] bg-repeat"
                       ref={dottedLineRef}
@@ -314,7 +314,7 @@ const CreateClient = () => {
 
                 <div className="col-span-4 flex flex-col gap-4 md:col-span-8 lg:col-span-12">
                   <Tabs defaultValue="Motion">
-                    <TabsList className="xs:w-[0px] gap-4 p-0 py-2">
+                    <TabsList className="xs:w-[0px] w-[0px] gap-4 bg-transparent p-0 py-2">
                       {springTab.languages.map((language) => (
                         <TabsTrigger
                           value={language}
@@ -329,11 +329,11 @@ const CreateClient = () => {
                       <TabsContent
                         value={language}
                         key={`${springTab.key}-${language}`}
-                        className="relative w-full rounded-lg bg-neutral-50 p-4 font-mono text-sm whitespace-pre"
+                        className="relative w-full overflow-hidden rounded-lg bg-neutral-50 p-4 font-mono text-sm whitespace-pre"
                       >
                         {renderCodeBlock(springTab, language)}
                         <Button
-                          className="absolute top-4 right-4 size-8 !p-2"
+                          className="absolute top-2.5 right-2.5 size-8 !p-2"
                           variant="secondary"
                           asChild
                           onClick={() =>

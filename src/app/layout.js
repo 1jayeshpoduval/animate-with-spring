@@ -1,15 +1,21 @@
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Atkinson_Hyperlegible, Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import NavbarLanding from "@/components/NavbarLanding";
+
+const atkinson = Atkinson_Hyperlegible({
+  variable: "--font-heading",
+  weight: ["400", "700"],
+  subsets: ["latin"],
+});
 
 const inter = Inter({
   variable: "--font-sans",
   subsets: ["latin"],
 });
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-serif",
+const geistMono = Geist_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
 });
 
@@ -22,7 +28,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} flex flex-col antialiased`}
+        className={`${atkinson.variable} ${inter.variable} ${geistMono.variable} flex flex-col antialiased`}
       >
         <header className="relative z-20">
           <NavbarLanding />
