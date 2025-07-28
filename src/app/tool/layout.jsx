@@ -16,10 +16,12 @@ export default function ToolLayout({ children }) {
       <header className="relative z-20">
         <NavbarTool />
       </header>
+
       <ContainerTool className="mt-28 block md:hidden">
         <TabsClient />
       </ContainerTool>
       {children}
+
       <Toaster position="bottom-right" />
       <Footer />
     </>

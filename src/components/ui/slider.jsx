@@ -39,8 +39,12 @@ function Slider({
       <SliderPrimitive.Track
         data-slot="slider-track"
         className={cn(
-          "/bg-muted /rounded-[8px] relative grow overflow-hidden bg-[url('/long-dotted-line.svg')] data-[orientation=horizontal]:h-8 data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-8",
+          "/bg-muted relative grow overflow-hidden data-[orientation=horizontal]:h-8 data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-8",
         )}
+        style={{
+          background:
+            "linear-gradient(90deg, var(--color-neutral-200), var(--color-neutral-200) 50%, transparent 50%, transparent 100%) 0 0 / 0.3rem",
+        }}
       >
         <SliderPrimitive.Range
           data-slot="slider-range"

@@ -1,6 +1,7 @@
 "use client";
-import React from "react";
+import React, { useRef } from "react";
 import { motion } from "motion/react";
+import useBallX from "@/hooks/useBallX";
 
 const PresetsList = ({
   presets,
@@ -9,9 +10,10 @@ const PresetsList = ({
   handleHoveredAnimation,
   handlePresetClick,
   isPresetOpen,
-  dottedLineRef,
-  ballTravelDistance,
 }) => {
+  const dottedLineRef = useRef(null);
+  const { ballTravelDistance } = useBallX(dottedLineRef);
+
   const presetsAnimation = {
     hidden: { opacity: 0 },
     show: {
@@ -50,25 +52,35 @@ const PresetsList = ({
             className="relative flex h-80 items-center justify-center overflow-hidden rounded-2xl bg-neutral-50"
             variants={presetItemsAnimation}
             whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            layoutId={preset.name}
+            layout="preserve-aspect"
           >
             <div
-              className="relative h-[1px] w-[65%] bg-[url('/dotted-line.svg')] bg-repeat"
+              className="animate-move relative h-[1px] w-[65%]"
+              style={{
+                background:
+                  "linear-gradient(90deg, var(--color-neutral-500), var(--color-neutral-500) 50%, transparent 50%, transparent 100%) 0 0 / 0.5rem 1px ",
+              }}
               ref={dottedLineRef}
             >
               <motion.div
                 key={
-                  hovered.name === preset.name && !isPresetOpen
+                  hovered.name === preset.name
                     ? `active-${preset.name}`
                     : `inactive-${preset.name}`
                 } // Force recreate element on hover in and out. This ensures Motion doesn't keep the last animated position in memory and resumes from there
                 className={`absolute top-1/2 size-8 -translate-[16px] rounded-full ${
-                  hovered?.name === preset.name
+                  hovered.name === preset.name
                     ? "bg-secondary"
                     : "bg-transparent"
                 }`}
                 initial={{ x: 0 }}
                 animate={{
-                  x: hovered.name === preset.name ? ballTravelDistance : 0,
+                  x:
+                    hovered.name === preset.name && !isPresetOpen
+                      ? ballTravelDistance
+                      : 0,
                 }} // Animate the ball to the width of the dotted line
                 transition={
                   preset.type === "time"
