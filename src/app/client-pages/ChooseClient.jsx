@@ -1,12 +1,11 @@
 "use client";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import ContainerTool from "@/components/ContainerTool";
 import { AnimatePresence, motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import useBallX from "@/hooks/useBallX";
 import PresetsList from "@/components/PresetsList";
-import Preset from "@/components/Preset";
+import PresetModal from "@/components/PresetModal";
 
 const ChooseClient = () => {
   const [hovered, setHovered] = useState("");
@@ -19,13 +18,6 @@ const ChooseClient = () => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [isPresetOpen, setIsPresetOpen] = useState(false);
-
-  // Since <PresetList /> and <Preset /> have different dotted line widths
-  const dottedLineRefList = useRef(null);
-  const dottedLineRefModal = useRef(null);
-
-  const ballTravelDistanceList = useBallX(dottedLineRefList);
-  const ballTravelDistanceModal = useBallX(dottedLineRefModal);
 
   useEffect(() => {
     fetch("/api/presets")
@@ -107,7 +99,7 @@ const ChooseClient = () => {
           <AnimatePresence mode="popLayout">
             {isLoading && !isPresetOpen ? (
               <motion.div
-                className="flex h-[80vh] items-center justify-center"
+                className="flex h-[50vh] items-center justify-center lg:h-[75vh]"
                 key="loading"
                 animate={{ opacity: 1 }}
                 exit={{
@@ -146,19 +138,15 @@ const ChooseClient = () => {
                 handleHoveredAnimation={handleHoveredAnimation}
                 handlePresetClick={handlePresetClick}
                 isPresetOpen={isPresetOpen}
-                ballTravelDistance={ballTravelDistanceList}
-                dottedLineRef={dottedLineRefList}
               />
             )}
           </AnimatePresence>
         </ContainerTool>
-        <Preset
+        <PresetModal
           presets={presets}
           selectedPreset={selectedPreset}
           isPresetOpen={isPresetOpen}
           setIsPresetOpen={setIsPresetOpen}
-          ballTravelDistance={ballTravelDistanceModal}
-          dottedLineRef={dottedLineRefModal}
           handleCodeCopy={handleCodeCopy}
           codeCopy={codeCopy}
         />

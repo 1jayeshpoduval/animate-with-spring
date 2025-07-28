@@ -13,7 +13,9 @@ const LearnClient = () => {
   const [resources, setResources] = useState([]);
 
   const dottedLineRef = useRef(null);
-  const ballTravelDistance = useBallX(dottedLineRef);
+  const { ballTravelDistance } = useBallX(dottedLineRef);
+
+  console.log(ballTravelDistance);
 
   const handleAnimationClick = (springFactor, animationType) => {
     setFactors((prevFactor) =>
@@ -137,7 +139,11 @@ const LearnClient = () => {
                           Tasteless
                         </span>
                         <div
-                          className="relative h-[1px] w-[65%] bg-[url('/dotted-line.svg')] bg-repeat"
+                          className="animate-move relative h-[1px] w-[65%]"
+                          style={{
+                            background:
+                              "linear-gradient(90deg, var(--color-neutral-500), var(--color-neutral-500) 50%, transparent 50%, transparent 100%) 0 0 / 0.5rem 1px ",
+                          }}
                           ref={dottedLineRef}
                         >
                           <motion.div
@@ -184,7 +190,11 @@ const LearnClient = () => {
                           Tasteful
                         </span>
                         <div
-                          className="relative h-[1px] w-[65%] bg-[url('/dotted-line.svg')] bg-repeat"
+                          className="animate-move relative h-[1px] w-[65%]"
+                          style={{
+                            background:
+                              "linear-gradient(90deg, var(--color-neutral-500), var(--color-neutral-500) 50%, transparent 50%, transparent 100%) 0 0 / 0.5rem 1px ",
+                          }}
                           ref={dottedLineRef}
                         >
                           <motion.div

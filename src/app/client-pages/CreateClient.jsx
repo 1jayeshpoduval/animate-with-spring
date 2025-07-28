@@ -156,7 +156,7 @@ const CreateClient = () => {
 
   return (
     <main>
-      <section className="my-12 md:mt-28 lg:h-[75vh]">
+      <section className="my-12 md:mt-28 lg:h-[74.9vh]">
         <Container className="@container/Create">
           <h1 className="font-heading text-3xl tracking-tight @md/Create:max-w-[25ch]">
             Make your own spring animation.
@@ -207,13 +207,7 @@ const CreateClient = () => {
                               const input = e.target.value;
                               const validPattern = /^\d*\.?\d*$/; // Regex to only allow numbers and .
 
-                              // If input empty, make it '1'
-                              if (input === "") {
-                                setSpringValues((prev) => ({
-                                  ...prev,
-                                  [field.key]: "1",
-                                }));
-                              } else if (validPattern.test(input)) {
+                              if (validPattern.test(input)) {
                                 // Two decimal places
                                 let trimmedInput = input;
                                 if (input.includes(".")) {
@@ -237,7 +231,17 @@ const CreateClient = () => {
                                 }
                               }
                             }}
-                            placeholder="20"
+                            /* If field empty and user leaves field, default to 1 */
+                            onBlur={(e) => {
+                              const input = e.target.value;
+                              if (input === "") {
+                                setSpringValues((prev) => ({
+                                  ...prev,
+                                  [field.key]: "1",
+                                }));
+                              }
+                            }}
+                            placeholder="10"
                             className="h-8 w-16 rounded-[8px] border border-black/10 text-center tabular-nums placeholder:flex placeholder:items-center placeholder:justify-center"
                           />
                         </div>
@@ -274,7 +278,11 @@ const CreateClient = () => {
                 <div className="col-span-4 lg:col-span-6">
                   <div className="relative flex h-[200px] items-center justify-center overflow-hidden rounded-2xl bg-neutral-50 lg:h-full">
                     <div
-                      className="relative h-[1px] w-[65%] bg-[url('/dotted-line.svg')] bg-repeat"
+                      className="animate-move relative h-[1px] w-[65%]"
+                      style={{
+                        background:
+                          "linear-gradient(90deg, var(--color-neutral-500), var(--color-neutral-500) 50%, transparent 50%, transparent 100%) 0 0 / 0.5rem 1px ",
+                      }}
                       ref={dottedLineRef}
                     >
                       <motion.div

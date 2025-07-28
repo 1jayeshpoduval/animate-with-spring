@@ -139,6 +139,17 @@
 
   --breakpoint-xl-1400: 1400px; /* CSS itself doesn’t allow using CSS variables inside media queries */
   --breakpoint-xs: 480px;
+
+  --animate-move: move 80s linear infinite; /* Move dotted line */
+
+  @keyframes move {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 100% 0;
+    }
+  }
 }
 
 @layer base {
