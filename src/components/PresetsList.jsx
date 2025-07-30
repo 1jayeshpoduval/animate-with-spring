@@ -41,22 +41,28 @@ const PresetsList = ({
       animate="show"
     >
       {presets.map((preset) => (
-        <div
+        <motion.div
           key={preset.id}
-          className="col-span-4 flex cursor-pointer flex-col gap-2 select-none"
+          className="relative col-span-4 cursor-pointer overflow-hidden rounded-2xl bg-white p-0 select-none"
           onPointerEnter={() => handleHoveredAnimation(preset.name)}
           onPointerLeave={() => setHovered("")}
           onClick={() => handlePresetClick(preset.name)}
+          layoutId={preset.name}
+          layout
+          transition={{
+            type: "spring",
+            mass: 0.75,
+            stiffness: 200,
+            damping: 20,
+          }}
         >
           <motion.div
-            className="relative flex h-80 items-center justify-center overflow-hidden rounded-2xl bg-neutral-50"
+            className="flex h-80 items-center justify-center rounded-2xl bg-neutral-50"
             variants={presetItemsAnimation}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            layoutId={preset.name}
-            layout="preserve-aspect"
           >
-            <div
+            <motion.div
               className="animate-move relative h-[1px] w-[65%]"
               style={{
                 background:
@@ -101,7 +107,7 @@ const PresetsList = ({
                       }
                 }
               ></motion.div>
-            </div>
+            </motion.div>
             {hovered.name === preset.name && (
               <>
                 <motion.div
@@ -173,7 +179,7 @@ const PresetsList = ({
               </>
             )}
           </motion.div>
-        </div>
+        </motion.div>
       ))}
     </motion.div>
   );
