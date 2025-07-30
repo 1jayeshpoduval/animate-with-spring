@@ -156,7 +156,7 @@ const CreateClient = () => {
 
   return (
     <main>
-      <section className="my-12 md:mt-28 lg:h-[74.9vh]">
+      <section className="my-12 md:mt-28">
         <Container className="@container/Create">
           <h1 className="font-heading text-3xl tracking-tight @md/Create:max-w-[25ch]">
             Make your own spring animation.
