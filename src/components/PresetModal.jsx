@@ -47,9 +47,8 @@ const PresetModal = ({
               layout
               transition={{
                 type: "spring",
-                mass: 0.75,
-                stiffness: 160,
-                damping: 20,
+                bounce: 0.1,
+                duration: 0.44,
               }}
             >
               <motion.div className="relative col-span-4 flex h-[250px] items-center justify-center overflow-hidden rounded-2xl bg-neutral-50 select-none @md/Choose:col-span-8 @lg/Choose:col-span-4 @lg/Choose:h-full @4xl/Choose:col-span-5">
@@ -174,7 +173,7 @@ const PresetModal = ({
                   x: 0,
                   y: 0,
                   transition: {
-                    duration: 0.3,
+                    duration: 0.32,
                   },
                 }}
                 exit={{
