@@ -16,7 +16,7 @@ const Learn = () => {
       <Head>
         <link rel="canonical" href={canonicalUrl} />
       </Head>
-      <LearnClient />;
+      <LearnClient />
     </>
   );
 };

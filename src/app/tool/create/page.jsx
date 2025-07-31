@@ -16,7 +16,7 @@ const Create = () => {
       <Head>
         <link rel="canonical" href={canonicalUrl} />
       </Head>
-      <CreateClient />;
+      <CreateClient />
     </>
   );
 };

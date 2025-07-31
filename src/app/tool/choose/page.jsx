@@ -16,7 +16,7 @@ const Choose = () => {
       <Head>
         <link rel="canonical" href={canonicalUrl} />
       </Head>
-      <ChooseClient />;
+      <ChooseClient />
     </>
   );
 };
