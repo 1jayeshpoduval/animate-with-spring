@@ -1,8 +1,24 @@
 import React from "react";
 import CreateClient from "@/app/client-pages/CreateClient";
+import Head from "next/head";
+
+export const metadata = {
+  title: "Create | Animate with Spring",
+  description:
+    "Design custom spring animations, instantly preview results and export Motion or SwiftUI code to speed up development.",
+};
 
 const Create = () => {
-  return <CreateClient />;
+  const canonicalUrl = "https://www.animatewithspring.com/tool/create";
+
+  return (
+    <>
+      <Head>
+        <link rel="canonical" href={canonicalUrl} />
+      </Head>
+      <CreateClient />;
+    </>
+  );
 };
 
 export default Create;
