@@ -1,5 +1,6 @@
 import React from "react";
 import ChooseClient from "@/app/client-pages/ChooseClient";
+import Head from "next/head";
 
 export const metadata = {
   title: "Choose | Animate with Spring",

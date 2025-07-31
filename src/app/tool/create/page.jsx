@@ -1,5 +1,6 @@
 import React from "react";
 import CreateClient from "@/app/client-pages/CreateClient";
+import Head from "next/head";
 
 export const metadata = {
   title: "Create | Animate with Spring",
