@@ -11,7 +11,7 @@ Explore a curated library of spring animation presets that feel great out of the
 ### 2. Create your own spring animation
 Tweak mass, stiffness, damping, bounce, and duration values to create your own spring animation. See real-time visual feedback and generate production-ready code instantly.
 
-### 3. Learn How to Animate Tastefully
+### 3. Learn how to animate tastefully
 Deep dive into the fundamentals of spring physics. Understand what stiffness and damping actually do, and learn the principles behind tasteful UI animation with helpful examples and best practices. Includes curated reading material for further exploration.
 
 ## Why use Animate with Spring?
@@ -21,10 +21,10 @@ Deep dive into the fundamentals of spring physics. Understand what stiffness and
 
 * Learn what makes a great spring animation from a design and UX perspective.
 
-## Live Demo
+## Live demo
 Check out the tool here: www.animatewithspring.com 
 
-## Tech Stack
+## Tech stack
 * NextJS
 
 * Motion for animation
