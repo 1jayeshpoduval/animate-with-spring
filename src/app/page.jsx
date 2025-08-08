@@ -10,7 +10,7 @@ export default function Home() {
       <Head>
         <link rel="canonical" href={canonicalUrl} />
       </Head>
-      <LandingClient />;
+      <LandingClient />
     </>
   );
 }

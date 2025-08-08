@@ -44,14 +44,23 @@ const PresetModal = ({
             <motion.div
               className="grid grid-cols-4 gap-0 overflow-hidden rounded-3xl bg-white p-4 @md/Choose:grid-cols-8 @lg/Choose:grid-cols-8 @4xl/Choose:grid-cols-12"
               layoutId={selectedPreset.name}
-              layout
               transition={{
                 type: "spring",
-                bounce: 0.1,
-                duration: 0.44,
+                mass: 1,
+                stiffness: 590,
+                damping: 53,
               }}
+              /* transition={{
+                type: "spring",
+                bounce: 0.1,
+                duration: 5,
+              }} */
             >
-              <motion.div className="relative col-span-4 flex h-[250px] items-center justify-center overflow-hidden rounded-2xl bg-neutral-50 select-none @md/Choose:col-span-8 @lg/Choose:col-span-4 @lg/Choose:h-full @4xl/Choose:col-span-5">
+              <motion.div
+                className="relative z-10 col-span-4 flex h-80 items-center justify-center overflow-hidden rounded-2xl bg-neutral-50 select-none @md/Choose:col-span-8 @lg/Choose:col-span-4 @lg/Choose:h-full @4xl/Choose:col-span-5"
+                layoutId={`${selectedPreset.name}-neutral-bg`}
+                layout="preserve-aspect"
+              >
                 <motion.div
                   className="animate-move relative h-[1px] w-[65%]"
                   style={{
@@ -93,16 +102,11 @@ const PresetModal = ({
                 </motion.div>
 
                 <motion.div
-                  className="absolute right-12 bottom-0 left-0 flex w-full items-end justify-between p-4 py-6 lg:p-8"
-                  initial={{ opacity: 0.5, scale: 0.99 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{
-                    type: "tween",
-                    ease: "easeOut",
-                    duration: 0.1,
-                  }}
+                  className="absolute right-0 bottom-0 left-0 flex h-12 items-end justify-between p-4 py-6 lg:p-8"
+                  layoutId={`${selectedPreset.name}-deets`}
+                  layout="preserve-aspect"
                 >
-                  <span className="text-primary/50 font-sans text-sm font-medium">
+                  <span className="text-primary/50 /bg-purple-500 font-sans text-sm font-medium">
                     {selectedPreset.name}
                   </span>
                   <div className="flex flex-col">
@@ -164,29 +168,29 @@ const PresetModal = ({
                 className="col-span-4 flex flex-col gap-4 pb-8 @md/Choose:col-span-8 @lg/Choose:col-span-4 @4xl/Choose:col-span-7"
                 initial={{
                   opacity: 0,
-
-                  x: isTabletAndAbove ? 50 : 0,
-                  y: isTabletAndAbove ? 0 : 50,
+                  x: isTabletAndAbove ? 10 : 0,
+                  y: isTabletAndAbove ? 0 : 10,
                 }}
                 animate={{
                   opacity: 1,
                   x: 0,
                   y: 0,
                   transition: {
-                    duration: 0.32,
+                    duration: 0.12,
                   },
                 }}
                 exit={{
                   opacity: 0,
 
-                  x: isTabletAndAbove ? 50 : 0,
-                  y: isTabletAndAbove ? 0 : 50,
+                  x: isTabletAndAbove ? 10 : 0,
+                  y: isTabletAndAbove ? 0 : 10,
                   transition: {
                     delay: 0,
                     duration: 0.1,
                   },
                 }}
                 transition={{ duration: 0.175, delay: 0.1 }}
+                layout="size"
               >
                 <div className="flex h-full flex-col">
                   <div className="text-primary relative rounded-t-none rounded-b-2xl px-0 pt-8 pb-4 md:px-8 md:pt-4 md:pb-4">
