@@ -42,25 +42,24 @@ const PresetsList = ({
     >
       {presets.map((preset) => (
         <motion.div
-          key={preset.id}
-          className="relative col-span-4 cursor-pointer overflow-hidden rounded-2xl bg-white p-0 select-none"
+          className="col-span-4 cursor-pointer overflow-hidden rounded-2xl bg-transparent p-0 select-none"
           onPointerEnter={() => handleHoveredAnimation(preset.name)}
           onPointerLeave={() => setHovered("")}
           onClick={() => handlePresetClick(preset.name)}
           layoutId={preset.name}
-          layout
           transition={{
             type: "spring",
-            mass: 0.75,
-            stiffness: 200,
-            damping: 20,
+            mass: 1,
+            stiffness: 590,
+            damping: 53,
           }}
         >
           <motion.div
-            className="flex h-80 items-center justify-center rounded-2xl bg-neutral-50"
+            className="relative flex h-80 items-center justify-center rounded-2xl bg-neutral-50"
             variants={presetItemsAnimation}
-            whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
+            layoutId={`${preset.name}-neutral-bg`}
+            layout="preserve-aspect"
           >
             <motion.div
               className="animate-move relative h-[1px] w-[65%]"
@@ -108,76 +107,69 @@ const PresetsList = ({
                 }
               ></motion.div>
             </motion.div>
-            {hovered.name === preset.name && (
-              <>
-                <motion.div
-                  className="absolute right-12 bottom-0 left-0 flex w-full items-end justify-between p-6"
-                  initial={{ opacity: 0.5, scale: 0.99 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{
-                    type: "tween",
-                    ease: "easeOut",
-                    duration: 0.1,
-                  }}
-                >
-                  <span className="text-primary/50 font-sans text-sm font-medium">
-                    {preset.name}
-                  </span>
-                  <div className="flex flex-col">
-                    {preset.config?.mass && (
-                      <div className="flex gap-1">
-                        <span className="text-primary/50 w-[18px] font-sans text-sm font-medium">
-                          M:
-                        </span>
-                        <span className="text-primary/50 font-sans text-sm font-bold">
-                          {preset.config?.mass}
-                        </span>
-                      </div>
-                    )}
-                    {preset.config?.stiffness && (
-                      <div className="flex gap-1">
-                        <span className="text-primary/50 w-[18px] font-sans text-sm font-medium">
-                          S:
-                        </span>
-                        <span className="text-primary/50 font-sans text-sm font-bold">
-                          {preset.config?.stiffness}
-                        </span>
-                      </div>
-                    )}
-                    {preset.config?.damping && (
-                      <div className="flex gap-1">
-                        <span className="text-primary/50 w-[18px] font-sans text-sm font-medium">
-                          D:
-                        </span>
-                        <span className="text-primary/50 font-sans text-sm font-bold">
-                          {preset.config?.damping}
-                        </span>
-                      </div>
-                    )}
-                    {preset.config?.bounce && (
-                      <div className="flex gap-1">
-                        <span className="text-primary/50 font-sans text-sm font-medium">
-                          B:
-                        </span>
-                        <span className="text-primary/50 font-sans text-sm font-bold">
-                          {preset.config?.bounce}
-                        </span>
-                      </div>
-                    )}
-                    {preset.config?.duration && (
-                      <div className="flex gap-1">
-                        <span className="text-primary/50 font-sans text-sm font-medium">
-                          D:
-                        </span>
-                        <span className="text-primary/50 font-sans text-sm font-bold">
-                          {preset.config?.duration}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                </motion.div>
-              </>
-            )}
+            <motion.div
+              className="absolute right-0 bottom-0 left-0 flex h-12 items-end justify-between p-4 py-6 lg:p-8" // Giving it a height stops it from shifting around when hovered
+              layoutId={`${preset.name}-deets`}
+              layout="preserve-aspect"
+            >
+              <span className="text-primary/50 font-sans text-sm font-medium">
+                {preset.name}
+              </span>
+              {hovered.name === preset.name && (
+                <div className="flex flex-col">
+                  {preset.config?.mass && (
+                    <div className="flex gap-1">
+                      <span className="text-primary/50 w-[18px] font-sans text-sm font-medium">
+                        M:
+                      </span>
+                      <span className="text-primary/50 font-sans text-sm font-bold">
+                        {preset.config?.mass}
+                      </span>
+                    </div>
+                  )}
+                  {preset.config?.stiffness && (
+                    <div className="flex gap-1">
+                      <span className="text-primary/50 w-[18px] font-sans text-sm font-medium">
+                        S:
+                      </span>
+                      <span className="text-primary/50 font-sans text-sm font-bold">
+                        {preset.config?.stiffness}
+                      </span>
+                    </div>
+                  )}
+                  {preset.config?.damping && (
+                    <div className="flex gap-1">
+                      <span className="text-primary/50 w-[18px] font-sans text-sm font-medium">
+                        D:
+                      </span>
+                      <span className="text-primary/50 font-sans text-sm font-bold">
+                        {preset.config?.damping}
+                      </span>
+                    </div>
+                  )}
+                  {preset.config?.bounce && (
+                    <div className="flex gap-1">
+                      <span className="text-primary/50 font-sans text-sm font-medium">
+                        B:
+                      </span>
+                      <span className="text-primary/50 font-sans text-sm font-bold">
+                        {preset.config?.bounce}
+                      </span>
+                    </div>
+                  )}
+                  {preset.config?.duration && (
+                    <div className="flex gap-1">
+                      <span className="text-primary/50 font-sans text-sm font-medium">
+                        D:
+                      </span>
+                      <span className="text-primary/50 font-sans text-sm font-bold">
+                        {preset.config?.duration}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              )}
+            </motion.div>
           </motion.div>
         </motion.div>
       ))}
