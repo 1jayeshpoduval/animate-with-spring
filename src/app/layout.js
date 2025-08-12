@@ -20,7 +20,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Animate with Spring",
+  title: "Animate with Spring | Configure great spring animations in seconds",
   description:
     "Configure tasteful spring animations with ease. Browse presets, create custom spring configurations, and learn spring animation best practices all in one place.",
   openGraph: {

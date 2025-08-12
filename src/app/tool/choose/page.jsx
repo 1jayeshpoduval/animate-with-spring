@@ -3,7 +3,7 @@ import ChooseClient from "@/app/client-pages/ChooseClient";
 import Head from "next/head";
 
 export const metadata = {
-  title: "Choose | Animate with Spring",
+  title: "Choose your favorite spring animation | Animate with Spring",
   description:
     "Explore a library of finely tuned spring animation presets. Quickly copy production-ready Motion or SwiftUI code to create high-quality spring animations without guesswork.",
 };
